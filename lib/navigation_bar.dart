@@ -8,6 +8,7 @@ class NavigationWidget extends StatelessWidget {
     return SizedBox(
       height: 50,
       child: NavigationDrawer(
+        //TODO remove me - just a test comment to test push
         backgroundColor: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
         elevation: 20,
         children: [
