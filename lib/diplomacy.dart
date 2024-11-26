@@ -3,7 +3,7 @@ import 'package:fourxgame/people.dart';
 
 
 class DiplomacyPage extends StatefulWidget {
-  DiplomacyPage(this.metPeople, this.currentPeople, {super.key});
+  const DiplomacyPage(this.metPeople, this.currentPeople, {super.key});
 
   final People metPeople;
   final Function currentPeople;
@@ -38,9 +38,9 @@ class _DiplomacyPageState extends State<DiplomacyPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Center(child: Text("Diplomacy", style: optionStyle,)),
+            const Center(child: Text("Diplomacy", style: optionStyle,)),
             Text(explanationText, textAlign: TextAlign.center,),
-            Divider(height: 10),
+            const Divider(height: 10),
             Expanded(child:
               ListView(
                 children: peopleCards,

@@ -11,14 +11,14 @@ class People {
       returnItem.add(
         Card(
           //child: SizedBox(width: cardWidth, height: cardHeight,
-            child: ListTile(
-              title: Text(person, style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold,), textAlign: TextAlign.center),
-              //trailing: const Icon(Icons.menu),
-              leading: const Icon(Icons.person, size: 50,),
-              tileColor: color,
-              onTap: () {},
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            ),
+          child: ListTile(
+            title: Text(person, style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold,), textAlign: TextAlign.center),
+            trailing: const SizedBox(width: 50,),
+            leading: const Icon(Icons.person, size: 50,),
+            tileColor: color,
+            onTap: () {},
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          ),
           //),
         )
       );
