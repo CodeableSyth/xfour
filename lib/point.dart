@@ -1,32 +1,39 @@
 import 'package:flutter/material.dart';
+import 'main.dart';
 
 class Point {
-  int height;
-  int column;
+  Map<String,int> pointLocation;
   double size;
   String? owner;
-  List<String> adjacency;
+  Map<String, bool> adjacency;
   int baseLevel; // 0 is unclaimed, 1 is claimed and requires owner, 2 is the same as below but with a shipyard built, and 3 is a garrison, also needs the requirements of 1
+  Function onPress;
 
-  Point({required this.size, required this.height, required this.column, this.owner, this.baseLevel = 0, this.adjacency = const ["Left","Right","Up","Down"]});
+  Point({required this.onPress, required this.size, required this.pointLocation, required this.owner, required this.adjacency, this.baseLevel = 0,});
 
-  Widget displayPoint () {
+  @override
+  String toString() {
+    return("{coordinates: $pointLocation, owner: $owner, adjacent: $adjacency, base level: $baseLevel}");
+  }
+
+  Widget displayPoint() {
     Icon? baseIcon;
     if (baseLevel == 0) {
       baseIcon = const Icon(Icons.circle_outlined);
-    } else if (baseLevel == 1 || owner != null) {
+    } else if (baseLevel == 1) {
       baseIcon = const Icon(Icons.circle);
-    } else if (baseLevel == 2 || owner != null) {
+    } else if (baseLevel == 2) {
       baseIcon = const Icon(Icons.add_circle);
-    } else if (baseLevel == 3 || owner != null) {
+    } else if (baseLevel == 3) {
       baseIcon = const Icon(Icons.indeterminate_check_box);
-    } else {
-      baseLevel = 0;
     }
-    return SizedBox(
-      width: size,
-      height: size,
-      child: IconButton(onPressed: () {}, icon: baseIcon!, iconSize: size,),
+    return IconButton(
+      onPressed: () {
+        //debugPrint();
+        onPress(adjacency, pointLocation);
+      },
+      icon: baseIcon!,
+      iconSize: size,
     );
   }
 }
