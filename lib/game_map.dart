@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'point.dart';
 
 class GameMapPage extends StatefulWidget {
   const GameMapPage({super.key});
@@ -12,7 +13,11 @@ class _GameMapPageState extends State<GameMapPage> {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder(); //TwoDimensionalScrollView
+    return Center(
+      child: ListView(
+        children: [],
+      ),
+    );
   }
 }
 

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
 class Point {
-  int height;
-  int column;
+  List<int> point;
   double size;
   String? owner;
   List<String> adjacency;
   int baseLevel; // 0 is unclaimed, 1 is claimed and requires owner, 2 is the same as below but with a shipyard built, and 3 is a garrison, also needs the requirements of 1
 
-  Point({required this.size, required this.height, required this.column, this.owner, this.baseLevel = 0, this.adjacency = const ["Left","Right","Up","Down"]});
+  Point({required this.size, required this.point, this.owner, this.baseLevel = 0, this.adjacency = const ["Left","Right","Up","Down"]});
 
   Widget displayPoint () {
     Icon? baseIcon;
