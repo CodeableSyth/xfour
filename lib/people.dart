@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class People {
-  People({required this.people, this.color = Colors.red});
+  People({required this.people, this.color = Colors.red, required this.onPress});
   List<String> people;
   Color? color;
+  final Function onPress;
 
   List<Card> cardGenerator({required double cardWidth, double cardHeight = 50}) {
     List<Card> returnItem = [];
@@ -16,7 +17,9 @@ class People {
             trailing: const SizedBox(width: 50,),
             leading: const Icon(Icons.person, size: 50,),
             tileColor: color,
-            onTap: () {},
+            onTap: () {
+              onPress();
+            },
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           ),
           //),

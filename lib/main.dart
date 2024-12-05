@@ -54,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
   AnimationController? controller;
   Animation<double>? animation;
   final Map<String, Point> pointMap = {};
-  People peopleMet = People(people: []);
+
   final List<Widget> _widgetOptions = [];
   int _currentIndex = 0;
 
@@ -74,49 +74,25 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
     });
   }
 
-  void buttonPress(Map<String, bool> adjacency, Map<String, int> currentCoordinates) async {
-    final prefs = await SharedPreferences.getInstance();
-    for (int x = -1; x < 3; x += 2) {
-      //debugPrint("point ${currentCoordinates["x"]! + x} ${currentCoordinates["y"]}");
-      //pointMap["point ${currentCoordinates["x"]! + x} ${currentCoordinates["y"]}"];
-      try {
-        Point adjacentPoint = pointMap["point ${currentCoordinates["x"]! +
-            x} ${currentCoordinates["y"]}"]!;
-        //debugPrint(adjacentPoint.toString());
-        final String saveData = await rootBundle.loadString("local_data/data.json");
-        Map<String, dynamic> parsedSaveData = await jsonDecode(saveData);
-        parsedSaveData["point ${currentCoordinates["x"]! + x} ${currentCoordinates["y"]}"]["level"] = 1;
-        parsedSaveData["point ${currentCoordinates["x"]! + x} ${currentCoordinates["y"]}"]["owner"] = "Codesyth";
-        //File("local_data/data.json").writeAsString(jsonEncode(parsedSaveData));
-        await prefs.setString('jsonFile', parsedSaveData.toString());
-        debugPrint(parsedSaveData.toString());
-        setState(() {
-          readJson();
-        });
-      }
-      catch (e) {
-        debugPrint("no point in current direction, choosing new direction");
-      }
-    }
-  }
-
   void readJson() async {
     final prefs = await SharedPreferences.getInstance();
     final String saveData = prefs.getString("jsonFile")!;
-
+    //debugPrint("saveData is $saveData");
     Map<String, dynamic> parsedSaveData = await jsonDecode(saveData);
 
     //debugPrint(parsedSaveData.toString());
     setState(() {
       pointMap.clear();
       parsedSaveData.forEach((key, value) {
+        //debugPrint("foreach $key $value");
         Map<String, dynamic> adjacency = value["adjacency"];
         Map<String, bool> adjacencyParsed = {};
         adjacency.forEach((direction, boolean) {adjacencyParsed[direction] = boolean;});
         Map<String, dynamic> coordinates = value["coordinates"];
         Map<String, int> coordinatesParsed = {};
+        //debugPrint("coordinates: $coordinates");
         coordinates.forEach((axis, value) {coordinatesParsed[axis] = int.parse(value.toString());});
-        String owner = value["name"];
+        String owner = value["owner"];
         int level = value["level"];
         pointMap[key] = Point(onPress: buttonPress,size: 50, pointLocation: coordinatesParsed, owner: owner, adjacency: adjacencyParsed, baseLevel: level);
       });
@@ -130,6 +106,70 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
   }
 
 
+  void buttonPress(Map<String, bool> adjacency, Map<String, int> currentCoordinates) async {
+    final prefs = await SharedPreferences.getInstance();
+
+
+    for (int x = -1; x < 3; x += 2) {
+      //debugPrint("point ${currentCoordinates["x"]! + x} ${currentCoordinates["y"]}");
+      //pointMap["point ${currentCoordinates["x"]! + x} ${currentCoordinates["y"]}"];
+      try {
+        Point adjacentPoint = pointMap["point ${currentCoordinates["x"]! + x} ${currentCoordinates["y"]}"]!;
+        //debugPrint(adjacentPoint.toString());
+        final String saveData = prefs.getString("jsonFile")!;
+        Map<String, dynamic> parsedSaveData = await jsonDecode(saveData);
+        debugPrint("point ${currentCoordinates["x"]! + x} ${currentCoordinates["y"]}, current point $currentCoordinates");
+        parsedSaveData["point ${currentCoordinates["x"]} ${currentCoordinates["y"]}"]["level"] =
+        1;
+        parsedSaveData["point ${currentCoordinates["x"]} ${currentCoordinates["y"]}"]["owner"] = "Codesyth";
+        parsedSaveData["point ${currentCoordinates["x"]! + x} ${currentCoordinates["y"]}"]["owner"] = "Codesyth";
+        String jsonString = jsonEncode(parsedSaveData);
+        //File("local_data/data.json").writeAsString(jsonEncode(parsedSaveData));
+        await prefs.setString('jsonFile', jsonString);
+        //debugPrint("parsed saved data: ${parsedSaveData.toString()} jsonString:$jsonString");
+        readJson();
+        setState(() {
+          //readJson();
+        });
+      }
+      catch (e) {
+        //debugPrint("no point in current direction, choosing new direction");
+      }
+    }
+    for (int y = -1; y < 3; y += 2) {
+      //debugPrint("point ${currentCoordinates["x"]! + x} ${currentCoordinates["y"]}");
+      //pointMap["point ${currentCoordinates["x"]! + x} ${currentCoordinates["y"]}"];
+      try {
+        Point adjacentPoint = pointMap["point ${currentCoordinates["x"]} ${currentCoordinates["y"]! + y}"]!;
+        //debugPrint(adjacentPoint.toString());
+        final String saveData = prefs.getString("jsonFile")!;
+        Map<String, dynamic> parsedSaveData = await jsonDecode(saveData);
+        debugPrint("point ${currentCoordinates["x"]} ${currentCoordinates["y"]! + y}, current point $currentCoordinates");
+        parsedSaveData["point ${currentCoordinates["x"]} ${currentCoordinates["y"]}"]["level"] =
+        1;
+        parsedSaveData["point ${currentCoordinates["x"]} ${currentCoordinates["y"]}"]["owner"] =
+        "Codesyth";
+        parsedSaveData["point ${currentCoordinates["x"]} ${currentCoordinates["y"]! +
+            y}"]["owner"] = "Codesyth";
+        String jsonString = jsonEncode(parsedSaveData);
+        //File("local_data/data.json").writeAsString(jsonEncode(parsedSaveData));
+        await prefs.setString('jsonFile', jsonString);
+        //debugPrint("parsed saved data: ${parsedSaveData.toString()} jsonString:$jsonString");
+        readJson();
+        setState(() {
+          //readJson();
+        });
+      }
+      catch (e) {
+        //debugPrint("no point in current direction, choosing new direction");
+      }
+    }
+  }
+  People peopleMet = People(people: [], onPress: () async {
+    final prefs = await SharedPreferences.getInstance();
+    final String saveData = await rootBundle.loadString("local_data/data.json");
+    prefs.setString('jsonFile', saveData);
+  },);
 
   @override
   void initState() {
@@ -154,10 +194,10 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
           width: double.infinity,
           child: Image(image: AssetImage('images/image2.png'), fit: BoxFit.cover)),
     ]);
-    addPerson("Example1");
+    addPerson("Reset Map");
   }
 
-  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  //const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
 
   //Widget navigationBar = NavigationWidget(onItemTapped);
@@ -215,6 +255,6 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
       //   tooltip: 'Increment',
       //   child: const Icon(Icons.add),
       // ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+      );
+    }
   }
-}

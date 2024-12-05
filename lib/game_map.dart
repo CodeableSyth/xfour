@@ -27,12 +27,16 @@ class _GameMapPageState extends State<GameMapPage> {
   Widget build(BuildContext context) {
     widget.updateFunction();
     List<Widget> pointDisplay = [];
-    widget.pointMap.forEach((pointName, point) {if (point.owner == "Codesyth") {pointDisplay.add(point.displayPoint());}});
+    widget.pointMap.forEach((pointName, point) {if (point.owner == "Codesyth") {pointDisplay.add(
+      ListTile(title: point.displayPoint(), leading: Text(pointName, style: TextStyle(fontSize: 25),),));
+
+    }});
+
     //debugPrint(pointDisplay.toString());
     //for (Point point in pointDisplay) {}
 
 
-    return ListView(children: pointDisplay,);
+    return ListView(children: pointDisplay);
         //[widget.pointMap["point 0 0"]!.displayPoint()],
   }
 }

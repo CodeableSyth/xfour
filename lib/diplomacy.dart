@@ -44,6 +44,7 @@ class _DiplomacyPageState extends State<DiplomacyPage> {
             Expanded(child:
               ListView(
                 children: peopleCards,
+
                 //physics: ScrollPhysics(parent: Scro),
               ),
             )

@@ -1,6 +1,6 @@
 {
   "point 0 0": {
-    "name": "Null",
+    "owner": "Null",
     "coordinates": {
       "x": 0,
       "y": 0
@@ -15,13 +15,13 @@
     }
   },
   "point 1 0": {
-    "name": "Codesyth",
+    "owner": "Codesyth",
     "coordinates": {
       "x": 1,
       "y": 0
     },
     "troops": [],
-    "level": 1,
+    "level": 0,
     "adjacency": {
       "up": false,
       "down": true,
@@ -30,7 +30,7 @@
     }
   },
   "point 0 1": {
-    "name": "Null",
+    "owner": "Null",
     "coordinates": {
       "x": 0,
       "y": 1
@@ -45,13 +45,58 @@
     }
   },
   "point 1 1": {
-    "name": "Null",
+    "owner": "Null",
     "coordinates": {
       "x": 1,
       "y": 1
     },
     "troops": [],
     "level": 0,
+    "adjacency": {
+      "up": true,
+      "down": false,
+      "left": true,
+      "right": false
+    }
+  },
+  "point 1 2": {
+    "owner": "Null",
+    "coordinates": {
+      "x": 1,
+      "y": 2
+    },
+    "troops": [],
+    "level": 0,
+    "adjacency": {
+      "up": true,
+      "down": false,
+      "left": true,
+      "right": false
+    }
+  },
+  "point 1 3": {
+    "owner": "Null",
+    "coordinates": {
+      "x": 1,
+      "y": 3
+    },
+    "troops": [],
+    "level": 0,
+    "adjacency": {
+      "up": true,
+      "down": false,
+      "left": true,
+      "right": false
+    }
+  },
+  "point 1 4": {
+    "owner": "Null",
+    "coordinates": {
+      "x": 1,
+      "y": 4
+    },
+    "troops": [],
+    "level": 3,
     "adjacency": {
       "up": true,
       "down": false,
